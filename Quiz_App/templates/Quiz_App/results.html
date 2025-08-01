@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Quiz Results
+{% endblock %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto text-center">
+    <h1 class="text-4xl font-bold text-gray-900">Quiz Completed!</h1>
+    <p class="mt-4 text-xl text-gray-600">Here are your results for the {{ category.name }} quiz.</p>
+
+    <div class="my-10">
+        <div class="inline-block relative">
+            <div class="w-48 h-48 rounded-full bg-indigo-100 flex items-center justify-center">
+                <div class="w-40 h-40 rounded-full bg-white flex items-center justify-center shadow-inner">
+                    <span class="text-5xl font-bold text-indigo-600">{{ score }}</span>
+                </div>
+            </div>
+             <div class="absolute top-0 left-0 w-full h-full" style="transform: rotate(-90deg);">
+                <svg class="w-full h-full" viewBox="0 0 100 100">
+                    <circle class="text-gray-200" stroke-width="10" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50"/>
+                    <circle class="text-indigo-600"
+                            stroke-width="10"
+                            stroke-dasharray="{{ percentage }}, 283"
+                            stroke-dashoffset="0"
+                            stroke-linecap="round"
+                            stroke="currentColor"
+                            fill="transparent"
+                            r="45"
+                            cx="50"
+                            cy="50"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+
+    <p class="text-2xl font-semibold text-gray-800">You scored {{ score }} out of {{ total_questions }}</p>
+
+    {% if percentage >= 80 %}
+    <p class="mt-2 text-lg text-green-600 font-medium">Excellent work! You're a true master of {{ category.name }}.</p>
+    {% elif percentage >= 50 %}
+    <p class="mt-2 text-lg text-yellow-600 font-medium">Good job! A little more practice and you'll be an expert.</p>
+    {% else %}
+    <p class="mt-2 text-lg text-red-600 font-medium">Keep trying! Review the topics and you'll improve.</p>
+    {% endif %}
+
+    <div class="mt-10">
+        <a href="{% url 'home' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
+            Try Another Quiz
+        </a>
+    </div>
+</div>
+{% endblock %}
