@@ -1,0 +1,55 @@
+{% extends 'Quiz_App/base.html' %}
+
+{% block title %}Session Detail{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="h1">Session {{ session.pk }} - {{ session.user.username }}</h1>
+  <p class="small">Category: {% if session.category %}{{ session.category.name }}{% endif %} &middot; Started: {{ session.started_at }}</p>
+
+  <div class="card mt-4">
+    <h3>Captures</h3>
+    <div id="capturesContainer" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+      {% for c in captures %}
+        <div data-capture-id="{{ c.pk }}" style="width:200px">
+          <img src="{{ c.image.url }}" style="width:100%;border-radius:6px;border:1px solid #eef2f6" alt="capture">
+          <div class="small">{{ c.timestamp }}</div>
+        </div>
+      {% empty %}
+        <div class="small">No captures.</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script>
+// Poll for new captures and prepend them to the container
+;(function(){
+  const container = document.getElementById('capturesContainer');
+  if(!container) return;
+  const sessionPk = '{{ session.pk }}';
+  // build a set of existing ids
+  const seen = new Set(Array.from(container.querySelectorAll('[data-capture-id]')).map(el=>parseInt(el.getAttribute('data-capture-id'))));
+
+  async function poll(){
+    try{
+      const url = new URL('{% url "host_session_captures_json" session.pk %}', window.location.origin);
+      // ask only for captures after the max seen id
+      const maxSeen = Math.max(0,...Array.from(seen));
+      if(maxSeen) url.searchParams.set('since_id', maxSeen);
+      const r = await fetch(url); const j = await r.json();
+      if(j.captures && j.captures.length){
+        j.captures.forEach(c=>{
+          if(seen.has(c.id)) return;
+          seen.add(c.id);
+          const d = document.createElement('div'); d.setAttribute('data-capture-id', c.id); d.style.width='200px';
+          d.innerHTML = `<img src="${c.url}" style="width:100%;border-radius:6px;border:1px solid #eef2f6"><div class="small">${new Date(c.timestamp).toLocaleString()}</div>`;
+          container.prepend(d);
+        });
+      }
+    }catch(e){console.error('poll error',e)}
+  }
+  // initial poll and then every 5s
+  poll(); setInterval(poll, 5000);
+})();
+</script>
+{% endblock %}

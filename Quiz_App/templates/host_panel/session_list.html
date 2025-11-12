@@ -1,0 +1,28 @@
+{% extends 'Quiz_App/base.html' %}
+
+{% block title %}Exam Sessions{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="h1">Exam Sessions</h1>
+  <div class="card mt-4">
+    <table class="table">
+      <thead>
+        <tr><th>User</th><th>Category</th><th>Started</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for s in sessions %}
+        <tr>
+          <td>{{ s.user.username }}</td>
+          <td>{% if s.category %}{{ s.category.name }}{% endif %}</td>
+          <td>{{ s.started_at }}</td>
+          <td style="text-align:right"><a href="{% url 'host_session_detail' s.pk %}" class="btn-inline">View</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No sessions yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

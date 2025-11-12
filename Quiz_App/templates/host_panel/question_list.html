@@ -1,0 +1,43 @@
+{% extends 'Quiz_App/base.html' %}
+
+{% block title %}Manage Questions{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="kv">
+        <h1 class="h1">Questions</h1>
+        <a href="{% url 'host_question_create' %}" class="btn">Create new question</a>
+    </div>
+
+    <div class="card mt-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Category</th>
+                    <th>Marks</th>
+                    <th style="text-align:right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in questions %}
+                <tr>
+                    <td>{{ q.question_text }}</td>
+                    <td>{{ q.category.name }}</td>
+                    <td>{{ q.marks }}</td>
+                    <td style="text-align:right">
+                        <a href="{% url 'host_question_edit' q.pk %}" class="btn-inline">Edit</a>
+                        <a href="{% url 'host_question_delete' q.pk %}" class="btn-inline" style="color:var(--danger);margin-left:12px">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No questions yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

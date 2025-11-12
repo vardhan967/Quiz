@@ -14,9 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-81fr8u9$sv67*2)(2ag13*t8f*8jc*rqr2^bz^8@z^295@*!xy')
 
 # ⚠️ SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['suvarna.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 
 # ==============================================================================
@@ -101,8 +101,8 @@ USE_TZ = True
 # ==============================================================================
 # STATIC FILES (CSS, JAVASCRIPT, IMAGES)
 # ==============================================================================
-# This is the URL your files will be served from.
-STATIC_URL = 'static/'
+# This is the URL your static files will be served from.
+STATIC_URL = '/static/'
 
 # This is the directory where `collectstatic` will gather all static files
 # for your production server to use.
@@ -114,3 +114,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # ==============================================================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    # or os.path.join(BASE_DIR, 'static'), if you prefer os.path
+]

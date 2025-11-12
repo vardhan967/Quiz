@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Category, Question, Answer
 
+
 # To make the admin interface more user-friendly, we can customize how models are displayed.
 
 class AnswerInline(admin.TabularInline):
@@ -35,6 +36,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     # Adds a search bar to search by category name.
     search_fields = ('name',)
+
 
 # Note: We don't need to register the Answer model separately
 # because it is already managed through the QuestionAdmin via AnswerInline.

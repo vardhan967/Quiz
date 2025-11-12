@@ -1,0 +1,39 @@
+{% extends 'Quiz_App/base.html' %}
+
+{% block title %}Manage Categories{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="kv">
+        <h1 class="h1">Categories</h1>
+        <a href="{% url 'host_category_create' %}" class="btn">Create new category</a>
+    </div>
+
+    <div class="card mt-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="text-align:right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in categories %}
+                <tr>
+                    <td>{{ c.name }}</td>
+                    <td style="text-align:right">
+                        <a href="{% url 'host_category_edit' c.pk %}" class="btn-inline">Edit</a>
+                        <a href="{% url 'host_category_delete' c.pk %}" class="btn-inline" style="color:var(--danger);margin-left:12px">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">No categories yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

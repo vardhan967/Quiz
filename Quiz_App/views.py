@@ -4,6 +4,7 @@ from .forms import RegistrationForm, LoginForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 import random
+from django.http import JsonResponse
 
 def home(request):
     """
@@ -102,6 +103,7 @@ def quiz(request, category_id):
         'category': category,
         'total_questions': len(question_ids)
     }
+    return render(request, 'quiz.html', context)
     return render(request, 'quiz.html', context)
 
 @login_required

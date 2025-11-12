@@ -13,3 +13,4 @@ urlpatterns = [
     # Include all URLs from the Quiz_App
     path('', include('Quiz_App.urls')),
 ]
+

@@ -57,3 +57,4 @@ class Answer(models.Model):
         """String representation of the Answer model."""
         return f"{self.answer_text} (for: {self.question.question_text[:20]}...)"
 
+

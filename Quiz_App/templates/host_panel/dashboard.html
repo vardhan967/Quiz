@@ -1,0 +1,53 @@
+{% extends 'Quiz_App/base.html' %}
+
+{% block title %}Host Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="grid cols-3">
+        <div class="card">
+            <h3 class="small">Categories</h3>
+            <div class="kv mt-4">
+                <div class="value">{{ categories_count }}</div>
+            </div>
+            <p class="lead mt-4">Manage quiz categories</p>
+            <div class="mt-4">
+                <a href="{% url 'host_category_list' %}" class="btn-inline">Manage</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="small">Questions</h3>
+            <div class="kv mt-4">
+                <div class="value">{{ questions_count }}</div>
+            </div>
+            <p class="lead mt-4">Create and edit questions</p>
+            <div class="mt-4">
+                <a href="{% url 'host_question_list' %}" class="btn-inline">Manage</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="small">Answers</h3>
+            <div class="kv mt-4">
+                <div class="value">{{ answers_count }}</div>
+            </div>
+            <p class="lead mt-4">Review answers</p>
+            <div class="mt-4">
+                <a href="{% url 'host_question_list' %}" class="btn-inline">Manage</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <div class="card">
+            <h2 class="h1">Quick actions</h2>
+            <div class="mt-4">
+                <a href="{% url 'host_category_create' %}" class="btn">Create Category</a>
+                <a href="{% url 'host_question_create' %}" class="btn secondary" style="margin-left:8px">Create Question</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
